@@ -1,0 +1,11 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "activate conda environment",
+            "type": "shell",
+            "command": "source ~/anaconda3/etc/profile.d/conda.sh && conda activate nerfstudio",
+            "problemMatcher": []
+        }
+    ]
+}

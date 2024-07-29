@@ -148,6 +148,20 @@
         "--include_mono_prior=False",
         "--auto-orient=True"
       ]
+    },
+    {
+      "name": "Splatfacto Garden",
+      "type": "python",
+      "request": "launch",
+      "program": "nerfstudio/scripts/train.py",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "env": { "CUDA_VISIBLE_DEVICES": "0" },
+      "args": [
+        "splatfacto",
+        "--data=data/mipnerf360/garden_images_8/",
+      ],
+      "preLaunchTask": "activate conda environment"
     }
   ]
 }
