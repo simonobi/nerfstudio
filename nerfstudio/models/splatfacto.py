@@ -45,6 +45,8 @@ from nerfstudio.utils.colors import get_color
 from nerfstudio.utils.misc import torch_compile
 from nerfstudio.utils.rich_utils import CONSOLE
 
+from nerfstudio.utils.rade_gs_loss_utils import l1_loss, ssim
+from nerfstudio.utils.rade_gs_graphics_utils import point_double_to_normal, depth_double_to_normal
 
 def random_quat_tensor(N):
     """
@@ -867,8 +869,31 @@ class SplatfactoModel(Model):
             gt_img = gt_img * mask
             pred_img = pred_img * mask
 
+        #LOSS FUNCTION
+        #NerfStudio implementation
         Ll1 = torch.abs(gt_img - pred_img).mean()
         simloss = 1 - self.ssim(gt_img.permute(2, 0, 1)[None, ...], pred_img.permute(2, 0, 1)[None, ...])
+        main_loss = (1 - self.config.ssim_lambda) * Ll1 + self.config.ssim_lambda * simloss
+
+        #########################################################################################
+        #RaDe-GS implementation
+
+        # viewpoint_cam = 
+        # rendered_expected_depth: torch.Tensor = render_pkg["expected_depth"]
+        # rendered_median_depth: torch.Tensor = render_pkg["median_depth"]
+        # rendered_normal: torch.Tensor = render_pkg["normal"]
+        # depth_middepth_normal = depth_double_to_normal(viewpoint_cam, rendered_expected_depth, rendered_median_depth)
+        
+        # lambda_depth_normal = 0.05
+        # depth_ratio = 0.6
+        # normal_error_map = (1 - (rendered_normal.unsqueeze(0) * depth_middepth_normal).sum(dim=1))
+        # depth_normal_loss = (1 - depth_ratio) * normal_error_map[0].mean() + depth_ratio * normal_error_map[1].mean()
+
+        # rgb_loss = (1.0 - self.config.ssim_lambda) * Ll1 + self.config.ssim_lambda * (1.0 - ssim(pred_img, gt_img.unsqueeze(0)))
+        # main_loss = rgb_loss + depth_normal_loss * lambda_depth_normal
+
+        
+        #########################################################################################
         if self.config.use_scale_regularization and self.step % 10 == 0:
             scale_exp = torch.exp(self.scales)
             scale_reg = (
@@ -883,7 +908,7 @@ class SplatfactoModel(Model):
             scale_reg = torch.tensor(0.0).to(self.device)
 
         loss_dict = {
-            "main_loss": (1 - self.config.ssim_lambda) * Ll1 + self.config.ssim_lambda * simloss,
+            "main_loss": main_loss,
             "scale_reg": scale_reg,
         }
 
