@@ -13,14 +13,14 @@
     },
     {
       "name": "Python: Attach using Process ID",
-      "type": "python",
+      "type": "debugpy",
       "request": "attach",
       "processId": "${command:pickProcess}",
       "justMyCode": true
     },
     {
       "name": "Python: Current File",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "program": "${file}",
       "console": "integratedTerminal",
@@ -28,7 +28,7 @@
     },
     {
       "name": "Python: train",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "program": "nerfstudio/scripts/train.py",
       "console": "integratedTerminal",
@@ -40,7 +40,7 @@
     },
     {
       "name": "Python: train ngp",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "program": "nerfstudio/scripts/train.py",
       "console": "integratedTerminal",
@@ -48,7 +48,7 @@
     },
     {
       "name": "Python: train ngp nerfstudio",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "program": "nerfstudio/scripts/train.py",
       "console": "integratedTerminal",
@@ -68,7 +68,7 @@
     },
     {
       "name": "Python: train ngp-friends",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "program": "nerfstudio/scripts/train.py",
       "console": "integratedTerminal",
@@ -87,7 +87,7 @@
     },
     {
       "name": "Python: train semantic_nerfw",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "program": "nerfstudio/scripts/train.py",
       "console": "integratedTerminal",
@@ -95,7 +95,7 @@
     },
     {
       "name": "Python: NeuS on Replica",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "program": "nerfstudio/scripts/train.py",
       "console": "integratedTerminal",
@@ -114,7 +114,7 @@
     },
     {
       "name": "Python: NeuS-facto on Replica",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "program": "nerfstudio/scripts/train.py",
       "console": "integratedTerminal",
@@ -133,7 +133,7 @@
     },
     {
       "name": "Python: NeuS-facto on DTU (no mono-prior)",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "program": "nerfstudio/scripts/train.py",
       "console": "integratedTerminal",
@@ -150,7 +150,7 @@
       ]
     },
     {
-      "name": "Splatfacto Garden",
+      "name": "Splatfacto Truck",
       "type": "debugpy",
       "request": "launch",
       "program": "nerfstudio/scripts/train.py",
@@ -159,7 +159,7 @@
       "env": { "CUDA_VISIBLE_DEVICES": "0" },
       "args": [
         "splatfacto",
-        "--data=data/mipnerf360/garden_images_8/",
+        "--data=../DATASET/Truck/",
       ],
       "preLaunchTask": "activate conda environment"
     }
