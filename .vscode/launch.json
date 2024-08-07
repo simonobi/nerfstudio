@@ -159,7 +159,7 @@
       "env": { "CUDA_VISIBLE_DEVICES": "0" },
       "args": [
         "splatfacto",
-        "--data=../DATASET/Truck/",
+        "--data=../DATASET/Truck_nerfstudio/",
       ],
       "preLaunchTask": "activate conda environment"
     }
