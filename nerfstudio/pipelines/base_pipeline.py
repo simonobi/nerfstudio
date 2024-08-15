@@ -141,7 +141,6 @@ class Pipeline(nn.Module):
         model_outputs = self.model(ray_bundle, batch)
         metrics_dict = self.model.get_metrics_dict(model_outputs, batch)
         #radegs
-        camera, batch_camera = self.datamanager.next_eval_image(step)
         loss_dict = self.model.get_loss_dict(model_outputs, batch, metrics_dict)
 
         return model_outputs, loss_dict, metrics_dict
@@ -162,7 +161,6 @@ class Pipeline(nn.Module):
         model_outputs = self.model(ray_bundle, batch)
         metrics_dict = self.model.get_metrics_dict(model_outputs, batch)
         #radegs
-        camera, batch_camera = self.datamanager.next_eval_image(step)
         loss_dict = self.model.get_loss_dict(model_outputs, batch, metrics_dict)
         self.train()
         return model_outputs, loss_dict, metrics_dict
@@ -306,7 +304,6 @@ class VanillaPipeline(Pipeline):
         model_outputs = self._model(ray_bundle)  # train distributed data parallel model if world_size > 1
         metrics_dict = self.model.get_metrics_dict(model_outputs, batch)
         #radegs
-        camera, batch_camera = self.datamanager.next_eval_image(step)
         loss_dict = self.model.get_loss_dict(model_outputs, batch, metrics_dict)
 
         return model_outputs, loss_dict, metrics_dict
@@ -331,7 +328,6 @@ class VanillaPipeline(Pipeline):
         model_outputs = self.model(ray_bundle)
         metrics_dict = self.model.get_metrics_dict(model_outputs, batch)
         #radegs
-        camera, batch_camera = self.datamanager.next_eval_image(step)
         loss_dict = self.model.get_loss_dict(model_outputs, batch, metrics_dict)
         self.train()
         return model_outputs, loss_dict, metrics_dict
