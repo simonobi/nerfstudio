@@ -759,7 +759,7 @@ class SplatfactoModel(Model):
             colors_crop = torch.sigmoid(colors_crop)
             sh_degree_to_use = None
 
-        render, alpha, info = rasterization(
+        render, alpha, normals_radegs, depths_radegs, info = rasterization(
             means=means_crop,
             quats=quats_crop / quats_crop.norm(dim=-1, keepdim=True),
             scales=torch.exp(scales_crop),
@@ -806,6 +806,8 @@ class SplatfactoModel(Model):
             "depth": depth_im,  # type: ignore
             "accumulation": alpha.squeeze(0),  # type: ignore
             "background": background,  # type: ignore
+            "normals_radegs": normals_radegs,
+            "depths_radegs": depths_radegs
         }  # type: ignore
 
     def get_gt_img(self, image: torch.Tensor):
@@ -879,10 +881,10 @@ class SplatfactoModel(Model):
         #########################################################################################
         #RaDe-GS implementation
 
-        # viewpoint_cam = 
-        # rendered_expected_depth: torch.Tensor = render_pkg["expected_depth"]
-        # rendered_median_depth: torch.Tensor = render_pkg["median_depth"]
-        # rendered_normal: torch.Tensor = render_pkg["normal"]
+        #viewpoint_cam = 
+        rendered_normal: torch.Tensor = outputs["normals_radegs"]
+        rendered_expected_depth: torch.Tensor = outputs["depths_radegs"]
+        # rendered_median_depth: torch.Tensor = outputs["median_depth"]
         # depth_middepth_normal = depth_double_to_normal(viewpoint_cam, rendered_expected_depth, rendered_median_depth)
         
         # lambda_depth_normal = 0.05
